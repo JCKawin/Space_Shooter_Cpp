@@ -1,39 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
-project(Space_Shooter_Cpp LANGUAGES CXX)
+project(Space_Shooter LANGUAGES CXX)
 
-# C++ standard
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Source files
-file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
-)
+file(GLOB_RECURSE MY_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
-if(NOT PROJECT_SOURCES)
-    message(FATAL_ERROR "No source files found in src/*.cpp")
-endif()
+add_executable(Space_Shooter "${MY_FILES}")
 
-# Executable target (CMake will add .exe on Windows automatically)
-add_executable(Space_Shooter_Cpp ${PROJECT_SOURCES})
+target_compile_definitions(Space_Shooter PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-# Public headers (your own and/or third-party headers copied to include/)
-target_include_directories(Space_Shooter_Cpp PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
-# Link external prebuilt libraries from lib/
-# This will link all libraries found in the lib folder with appropriate extensions per-platform.
-if(WIN32)
-    file(GLOB EXT_LIBS "${CMAKE_CURRENT_SOURCE_DIR}/lib/*.lib")
-elseif(APPLE)
-    file(GLOB EXT_LIBS "${CMAKE_CURRENT_SOURCE_DIR}/lib/*.a" "${CMAKE_CURRENT_SOURCE_DIR}/lib/*.dylib")
-else()
-    file(GLOB EXT_LIBS "${CMAKE_CURRENT_SOURCE_DIR}/lib/*.a" "${CMAKE_CURRENT_SOURCE_DIR}/lib/*.so")
-endif()
-
-if(EXT_LIBS)
-    target_link_directories(Space_Shooter_Cpp PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib)
-    target_link_libraries(Space_Shooter_Cpp PRIVATE ${EXT_LIBS})
-endif()
+target_link_libraries(Space_Shooter ${CMAKE_CURRENT_SOURCE_DIR}/lib/libraylib.a)

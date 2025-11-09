@@ -3,11 +3,46 @@
 //
 
 #include <iostream>
+#include "raylib.h"
+#include "constants.cpp"
+
+class Game
+{
+
+public:
+ Game()
+ {
+    InitWindow(RES[0] , RES[1] , "Space_Shooter");
+
+ }
+
+ void run(){
+    while (!WindowShouldClose())
+    {
+        BeginDrawing();
+        ClearBackground(SKYBLUE);
+
+        EndDrawing();
+    }
+    
+
+
+ }
+
+ ~Game()
+ {
+    CloseWindow();
+ }
+  
+};
+
 
 
 
 int main() {
-    std::cout << "Hello World!\n";
+    Game* player = new Game();
+    player->run();
+    delete player; 
     return 0;
 
 }
