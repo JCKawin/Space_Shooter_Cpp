@@ -3,16 +3,17 @@
 //
 
 #include <iostream>
-#include "raylib.h"
+#include <raylib.h>
 #include "constants.cpp"
-
+int RES_w = 1920;
+int RES_h = 1080;
 class Game
 {
 
 public:
  Game()
  {
-    InitWindow(RES[0] , RES[1] , "Space_Shooter");
+    InitWindow(RES_w , RES_h , "Space_Shooter");
 
  }
 
@@ -40,9 +41,9 @@ public:
 
 
 int main() {
-    Game* player = new Game();
-    player->run();
-    delete player; 
+    Game player = Game();
+    player.run();
+ 
     return 0;
 
 }
