@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <raylib.h>
-#include "constants.cpp"
 int RES_w = 1920;
 int RES_h = 1080;
 class Game
