@@ -1,12 +1,21 @@
-cmake_minimum_required(VERSION 3.16)
-project(Space_Shooter LANGUAGES CXX)
+﻿# CMakeList.txt : CMake project for Space_Shooter_Cpp, include source and define
+# project specific logic here.
+#
+cmake_minimum_required (VERSION 3.8)
 
-set(CMAKE_CXX_STANDARD 23)
+# Enable Hot Reload for MSVC compilers if supported.
+if (POLICY CMP0141)
+  cmake_policy(SET CMP0141 NEW)
+  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
+endif()
 
-file(GLOB_RECURSE MY_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
+project ("Space_Shooter_Cpp")
 
-add_executable(Space_Shooter "${MY_FILES}")
+# Add source to this project's executable.
+add_executable (Space_Shooter_Cpp "src/Space_Shooter_Cpp.cpp" "src/Space_Shooter_Cpp.h")
 
-target_compile_definitions(Space_Shooter PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+if (CMAKE_VERSION VERSION_GREATER 3.12)
+  set_property(TARGET Space_Shooter_Cpp PROPERTY CXX_STANDARD 20)
+endif()
 
-target_link_libraries(Space_Shooter ${CMAKE_CURRENT_SOURCE_DIR}/lib/libraylib.a)
+# TODO: Add tests and install targets if needed.
