@@ -2,11 +2,19 @@
 //
 
 #include "Space_Shooter_Cpp.h"
-
-using namespace std;
+#include "raylib.h"
 
 int main()
 {
-	cout << "Hello CMake." << endl;
+	InitWindow(1280, 720, "Space Shooter");
+
+	while (!WindowShouldClose()) {
+		BeginDrawing();
+
+		ClearBackground(SKYBLUE);
+
+		EndDrawing();
+	}
+	
 	return 0;
 }

@@ -3,13 +3,14 @@
     "configurePresets": [
         {
             "name": "windows-base",
-            "hidden": true,
-            "generator": "Ninja",
+            "hidden": false,
+            "generator": "",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
             "installDir": "${sourceDir}/out/install/${presetName}",
             "cacheVariables": {
-                "CMAKE_C_COMPILER": "cl.exe",
-                "CMAKE_CXX_COMPILER": "cl.exe"
+                "CMAKE_C_COMPILER": "gcc.exe",
+              "CMAKE_CXX_COMPILER": "g++.exe",
+              "CMAKE_TOOLCHAIN_FILE": "e:/vcpkg/scripts/buildsystems/vcpkg.cmake"
             },
             "condition": {
                 "type": "equals",

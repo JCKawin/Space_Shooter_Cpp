@@ -1,7 +1,7 @@
 ﻿# CMakeList.txt : CMake project for Space_Shooter_Cpp, include source and define
 # project specific logic here.
 #
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.30)
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
@@ -11,11 +11,17 @@ endif()
 
 project ("Space_Shooter_Cpp")
 
+# vcpkg
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/vcpkg_installed/x64-windows")
+
 # Add source to this project's executable.
 add_executable (Space_Shooter_Cpp "src/Space_Shooter_Cpp.cpp" "src/Space_Shooter_Cpp.h")
 
+find_package(raylib CONFIG REQUIRED)
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Space_Shooter_Cpp PROPERTY CXX_STANDARD 20)
 endif()
+
+target_link_libraries(Space_Shooter_Cpp PRIVATE raylib)
 
 # TODO: Add tests and install targets if needed.
