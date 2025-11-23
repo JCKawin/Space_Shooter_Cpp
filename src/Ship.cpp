@@ -22,6 +22,11 @@ void BaseShip::update(){
     direction.y = (IsKeyDown(KEY_S) - IsKeyDown(KEY_W)) * velocity;
     
     rect.x += direction.x;rect.y += direction.y;
+
+    if(rect.x < -128) rect.x =  1280;
+    if(rect.y > 720)  rect.y = -128;
+    if(rect.x > 1280) rect.x = -128;
+    if(rect.y < -128) rect.y =  720;
     
 
 }
