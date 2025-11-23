@@ -11,11 +11,19 @@ endif()
 
 project ("Space_Shooter_Cpp")
 
+if (WIN32)
 # vcpkg
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/vcpkg_installed/x64-windows")
+endif()
+
+set(SOURCEFILES
+    src/Space_Shooter_Cpp.cpp
+    src/Space_Shooter_Cpp.h
+    src/Ship.cpp
+    src/Ship.h)
 
 # Add source to this project's executable.
-add_executable (Space_Shooter_Cpp "src/Space_Shooter_Cpp.cpp" "src/Space_Shooter_Cpp.h")
+add_executable (Space_Shooter_Cpp ${SOURCEFILES})
 
 find_package(raylib CONFIG REQUIRED)
 if (CMAKE_VERSION VERSION_GREATER 3.12)
