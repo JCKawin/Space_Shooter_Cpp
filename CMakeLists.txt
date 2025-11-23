@@ -3,6 +3,13 @@
 #
 cmake_minimum_required (VERSION 3.30)
 
+set(RELEASE 0)
+
+if(RELEASE)
+message("release mode")
+set(CMAKE_CXX_FLAGS "-O5 -Wall -Wextra")
+endif()
+
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
   cmake_policy(SET CMP0141 NEW)
@@ -16,12 +23,7 @@ if (WIN32)
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/vcpkg_installed/x64-windows")
 endif()
 
-set(SOURCEFILES
-    src/Space_Shooter_Cpp.cpp
-    src/Space_Shooter_Cpp.h
-    src/Ship.cpp
-    src/Ship.h)
-
+file(GLOB SOURCEFILES "src/*.h" "src/*.cpp")
 # Add source to this project's executable.
 add_executable (Space_Shooter_Cpp ${SOURCEFILES})
 

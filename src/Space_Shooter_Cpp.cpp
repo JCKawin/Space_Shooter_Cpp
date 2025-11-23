@@ -4,6 +4,8 @@
 #include "Space_Shooter_Cpp.h"
 #include "raylib.h"
 #include "Ship.h"
+#include "bullet.h"
+
 
 int main()
 {
@@ -15,9 +17,14 @@ int main()
 	Music bgm  = LoadMusicStream("/home/jckawin/Space_Shooter_Cpp/media/audio/Project_Space Shooter_Final_Loop.mp3");
 	Texture2D background = LoadTexture("/home/jckawin/Space_Shooter_Cpp/media/img/proto#background.bmp");
 	auto ship = BaseShip();
-	
+	 
 	//non loop starters
 	PlayMusicStream(bgm);
+	Bullet *bullets = new Bullet[10];
+	for (int i ; i < 10 ; i ++){
+		bullets[i].rect = (Vector2) {-100 , -100};
+	}
+	int bno = 0; 
 	
 	while (!WindowShouldClose()) {
 		UpdateMusicStream(bgm);
@@ -32,6 +39,14 @@ int main()
 		EndDrawing();
 
 		ship.update();
+		if(KEY_J){
+			bullets[bno].set_pos(ship.get_rect());
+			bno++;
+			if (bno > 9) bno = 0;
+		}
+		for(int i ; i < 10 ; i++){
+			DrawTextureEx(bullets[i].image , bullets[i].rect , 0 , 1 , WHITE);
+		}
 	}
 	UnloadMusicStream(bgm);
 	return 0;
