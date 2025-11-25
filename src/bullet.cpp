@@ -1,13 +1,14 @@
 #include "bullet.h"
 
-Bullet::Bullet()
+Bullet::Bullet(Vector2 pos , Texture2D img)
 {
-    image = LoadTexture("/home/jckawin/Space_Shooter_Cpp/media/img/proto#bullet.png");
+    set_pos(pos);
+    image = img;
+    active = true;
 }
 
 Bullet::~Bullet()
 {
-    UnloadTexture(image);
 }
 
 void Bullet::set_pos(Vector2 position)
@@ -23,5 +24,8 @@ void Bullet::set_pos(Vector2 position)
 void Bullet::update(){
     
     rect.y -= velocity.y;
+    if (rect.y < -50){
+        active = false;
+    }
 
 }

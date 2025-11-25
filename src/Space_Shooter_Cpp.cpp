@@ -5,7 +5,14 @@
 #include "raylib.h"
 #include "Ship.h"
 #include "bullet.h"
+#include <vector>
+#include <algorithm>
 
+void SpawnBullet(std::vector<Bullet> &bullets ,Texture2D &img ,  Vector2 pos){
+	const Bullet bullet = Bullet(pos , img);
+	bullets.push_back(bullet);
+	
+}
 
 int main()
 {
@@ -16,15 +23,13 @@ int main()
 	//global stuffs
 	Music bgm  = LoadMusicStream("/home/jckawin/Space_Shooter_Cpp/media/audio/Project_Space Shooter_Final_Loop.mp3");
 	Texture2D background = LoadTexture("/home/jckawin/Space_Shooter_Cpp/media/img/proto#background.bmp");
+	Texture2D bullet_img = LoadTexture("/home/jckawin/Space_Shooter_Cpp/media/img/proto#bullet.png");
 	auto ship = BaseShip();
+	std::vector<Bullet> bullets ;
 	 
 	//non loop starters
 	PlayMusicStream(bgm);
-	Bullet *bullets = new Bullet[10];
-	for (int i ; i < 10 ; i ++){
-		bullets[i].rect = (Vector2) {-100 , -100};
-	}
-	int bno = 0; 
+	
 	
 	while (!WindowShouldClose()) {
 		UpdateMusicStream(bgm);
@@ -40,13 +45,20 @@ int main()
 
 		ship.update();
 		if(KEY_J){
-			bullets[bno].set_pos(ship.get_rect());
-			bno++;
-			if (bno > 9) bno = 0;
+			SpawnBullet(bullets , bullet_img ,  ship.get_rect());
 		}
-		for(int i ; i < 10 ; i++){
-			DrawTextureEx(bullets[i].image , bullets[i].rect , 0 , 1 , WHITE);
+
+		for(auto & bullet : bullets){
+			DrawTextureEx(bullet.image, bullet.rect , 0 , 1 , WHITE);
+			bullet.update();
 		}
+
+		bullets.erase(
+            std::remove_if(bullets.begin(), bullets.end(),
+                [](const Bullet& b) { return !b.active; }),
+            bullets.end()
+        );
+
 	}
 	UnloadMusicStream(bgm);
 	return 0;
