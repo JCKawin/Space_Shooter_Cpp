@@ -12,7 +12,7 @@ public:
     BaseShip();
     Texture2D get_image();
     Vector2 get_rect();
-    void update();
+    void update(float dt);
     ~
     BaseShip();
 };

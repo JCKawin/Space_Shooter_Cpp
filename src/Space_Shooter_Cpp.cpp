@@ -8,11 +8,6 @@
 #include <vector>
 #include <algorithm>
 
-void SpawnBullet(std::vector<Bullet> &bullets ,Texture2D &img ,  Vector2 pos){
-	const Bullet bullet = Bullet(pos , img);
-	bullets.push_back(bullet);
-	
-}
 
 int main()
 {
@@ -32,6 +27,7 @@ int main()
 	
 	
 	while (!WindowShouldClose()) {
+		float dt = (float) GetFrameTime();
 		UpdateMusicStream(bgm);
 		BeginDrawing();
 
@@ -39,25 +35,26 @@ int main()
 		DrawTexture(background , 0 , 0 , WHITE);
 		DrawTextureEx(ship.get_image() , ship.get_rect(),0,0.15f,WHITE);
 		DrawFPS(20 , 20);
-
+		
 
 		EndDrawing();
 
-		ship.update();
+		ship.update(dt);
 		if(KEY_J){
-			SpawnBullet(bullets , bullet_img ,  ship.get_rect());
+			Bullet bullet = Bullet(ship.get_rect() , bullet_img); 
+			bullets.push_back(bullet);
 		}
 
-		for(auto & bullet : bullets){
-			DrawTextureEx(bullet.image, bullet.rect , 0 , 1 , WHITE);
-			bullet.update();
+		for(int i ; i < bullets.size() ; i ++){
+			DrawTextureEx(bullets[i].image, bullets[i].rect , 0 , 1 , WHITE);
+			bullets[i].update(dt);
 		}
 
-		bullets.erase(
-            std::remove_if(bullets.begin(), bullets.end(),
-                [](const Bullet& b) { return !b.active; }),
-            bullets.end()
-        );
+		// bullets.erase(
+        //     std::remove_if(bullets.begin(), bullets.end(),
+        //         [](const Bullet& b) { return !b.active; }),
+        //     bullets.end()
+        // );
 
 	}
 	UnloadMusicStream(bgm);

@@ -21,9 +21,9 @@ void Bullet::set_pos(Vector2 position)
 
 
 
-void Bullet::update(){
+void Bullet::update(float dt){
     
-    rect.y -= velocity.y;
+    rect.y -= velocity.y * dt;
     if (rect.y < -50){
         active = false;
     }

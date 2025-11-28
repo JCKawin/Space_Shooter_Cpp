@@ -5,7 +5,7 @@ BaseShip::BaseShip(){
     image = LoadTexture("/home/jckawin/Space_Shooter_Cpp/media/img/proto#ship.png");
     rect.x = 640;
     rect.y = 360;
-    velocity = 0.1f;
+    velocity = 1000.0f;
 }
 
 Texture2D BaseShip::get_image(){
@@ -16,12 +16,12 @@ Vector2 BaseShip::get_rect(){
     return rect;
 }
 
-void BaseShip::update(){
+void BaseShip::update(float dt){
     Vector2 direction;
     direction.x = (IsKeyDown(KEY_D) - IsKeyDown(KEY_A)) * velocity;
     direction.y = (IsKeyDown(KEY_S) - IsKeyDown(KEY_W)) * velocity;
     
-    rect.x += direction.x;rect.y += direction.y;
+    rect.x += direction.x * dt;rect.y += direction.y * dt;
 
     if(rect.x < -128) rect.x =  1280;
     if(rect.y > 720)  rect.y = -128;
