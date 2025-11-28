@@ -16,9 +16,9 @@ int main()
 	InitAudioDevice();
 
 	//global stuffs
-	Music bgm  = LoadMusicStream("/home/jckawin/Space_Shooter_Cpp/media/audio/Project_Space Shooter_Final_Loop.mp3");
-	Texture2D background = LoadTexture("/home/jckawin/Space_Shooter_Cpp/media/img/proto#background.bmp");
-	Texture2D bullet_img = LoadTexture("/home/jckawin/Space_Shooter_Cpp/media/img/proto#bullet.png");
+	Music bgm  = LoadMusicStream("../media/audio/Project_Space Shooter_Final_Loop.mp3");
+	Texture2D background = LoadTexture("../media/img/proto#background.bmp");
+	Texture2D bullet_img = LoadTexture("../media/img/proto#bullet.png");
 	auto ship = BaseShip();
 	std::vector<Bullet> bullets ;
 	 
@@ -36,25 +36,25 @@ int main()
 		DrawTextureEx(ship.get_image() , ship.get_rect(),0,0.15f,WHITE);
 		DrawFPS(20 , 20);
 		
+		for(int i ; i < bullets.size() ; i ++){
+			DrawTextureEx(bullets[i].image, (Vector2) {800 , 200} , 0 , 1 , WHITE);
+			// bullets[i].update(dt);
+		}
+
 
 		EndDrawing();
 
 		ship.update(dt);
-		if(KEY_J){
-			Bullet bullet = Bullet(ship.get_rect() , bullet_img); 
+		if(IsKeyDown(KEY_J)){
+			Bullet bullet(ship.get_rect() , bullet_img); 
 			bullets.push_back(bullet);
 		}
 
-		for(int i ; i < bullets.size() ; i ++){
-			DrawTextureEx(bullets[i].image, bullets[i].rect , 0 , 1 , WHITE);
-			bullets[i].update(dt);
-		}
-
-		// bullets.erase(
-        //     std::remove_if(bullets.begin(), bullets.end(),
-        //         [](const Bullet& b) { return !b.active; }),
-        //     bullets.end()
-        // );
+		bullets.erase(
+            std::remove_if(bullets.begin(), bullets.end(),
+                [](const Bullet& b) { return !b.active; }),
+            bullets.end()
+        );
 
 	}
 	UnloadMusicStream(bgm);

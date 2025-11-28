@@ -6,8 +6,8 @@ cmake_minimum_required (VERSION 3.30)
 set(RELEASE 0)
 
 if(RELEASE)
-message("release mode")
-set(CMAKE_CXX_FLAGS "-O5 -Wall -Wextra")
+  message("release mode")
+  set(CMAKE_CXX_FLAGS "-O5 -Wall -Wextra")
 endif()
 
 # Enable Hot Reload for MSVC compilers if supported.
@@ -20,7 +20,7 @@ project ("Space_Shooter_Cpp")
 
 if (WIN32)
 # vcpkg
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/vcpkg_installed/x64-windows")
+  list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/vcpkg_installed/x64-windows")
 endif()
 
 file(GLOB SOURCEFILES "src/*.h" "src/*.cpp")
