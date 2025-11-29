@@ -39,6 +39,6 @@ Vector2 Bullet::get_rect(){
 
 void Bullet::update(float dt){
     
-   rect.y -= Game::BulletSpeed * dt;
+   rect.y -= Game::BulletSpeed * dt * 10;
 
 }

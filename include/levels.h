@@ -22,6 +22,7 @@ protected:
     void heal();
     void UI();
     void reset();
+    void event();
 
 public:
     std::chrono::high_resolution_clock Clock;
@@ -48,4 +49,6 @@ protected:
     Font Fuwl30;
     Music bgm;
     BaseShip ship;
+    std::chrono::_V2::system_clock::time_point timer;
+    int oneonly;
 };

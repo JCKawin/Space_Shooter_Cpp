@@ -5,7 +5,7 @@
 
 class Rock{
 public:
-    Rock(Vector2 location , Texture2D &image);
+    Rock(Texture2D &image);
     void update(float dt);
     void draw();
     Texture2D get_image();

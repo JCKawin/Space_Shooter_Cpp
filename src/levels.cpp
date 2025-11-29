@@ -2,13 +2,17 @@
 #include "stdbool.h"
 #include "stdlib.h"
 #include "math.h"
+#include <chrono>
+#include "astroid.h"
 
 BaseLevel::BaseLevel(){
     running = true;
     HealthBarCol = WHITE;
     score = 0;
     loadAsserts();
-    startCol = std::chrono::high_resolution_clock::now();
+    startCol = std::chrono::system_clock::now();
+    timer = std::chrono::system_clock::now();
+    oneonly = 0;
 }
 
  void BaseLevel::loadAsserts(){
@@ -29,6 +33,7 @@ int BaseLevel::run(){
     {   BeginDrawing();
         ClearBackground(Game::BgCol);
         DrawTexture(background , 0 , 0 , WHITE);
+        DrawFPS(40 , 40);
         ship.draw();
         for(auto & bullet : bullets) bullet.draw();
         for(auto & rock : Rocks) rock.draw();
@@ -36,7 +41,9 @@ int BaseLevel::run(){
         float dt = GetFrameTime();
         for(auto & bullet : bullets) bullet.update(dt);
         for(auto & rock : Rocks) rock.update(dt);
+        ship.update(dt);
         damage();
+        event();
     }
     reset();
     return 0;
@@ -49,7 +56,7 @@ void BaseLevel::damage(){
         {
             ship.Hp -= 5;
             HealthBarCol = RED;
-            startCol = std::chrono::high_resolution_clock::now();
+            startCol = std::chrono::system_clock::now();
             Rocks.erase(Rocks.begin() + i);
             i --;
         }
@@ -64,6 +71,27 @@ void BaseLevel::damage(){
         }
     }
 
+}
+
+void BaseLevel::event(){
+    double duration = (std::chrono::duration<double>(std::chrono::system_clock::now() - timer)).count();
+     if ((int)(duration*20) % 5 == 0 and oneonly != (int)(duration*20)){
+       
+        std::cout << (int)(duration * 10) << std::endl;
+        oneonly = (int) (duration *20);
+        Rocks.push_back(Rock(rockImg));
+    } 
+
+    if(IsKeyPressed(KEY_J)){
+        bullets.push_back(Bullet(ship.get_rect() , bulletImg));
+    }
+}
+
+void BaseLevel::reset(){
+    running = true;
+    score = 0;
+    HealthBarCol = WHITE;
+    ship.Hp = 100;
 }
 
 

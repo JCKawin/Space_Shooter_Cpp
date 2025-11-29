@@ -1,9 +1,9 @@
 #include "astroid.h"
 #include "raymath.h"
 
-Rock::Rock(Vector2 location , Texture2D &img){
+Rock::Rock(Texture2D &img){
     image = &img;
-    rect = location;
+    rect = (Vector2) {(float) (std::rand()%1280) , (float) (std::rand()%20)};
     direction = (Vector2) {(float)(std::rand()%2) + 1.0f , 1.0f};
     direction = Vector2Normalize(direction);
     angle = 0.0f;
