@@ -11,10 +11,7 @@ namespace Game {
     const float AstroidSpeed = 50.0f;
     const float BulletSpeed = 200.0f;
     const int Fps = 144;
-    bool CheckMaskCollision(Texture2D imgAt,
-                            Vector2 posA,
-                            Texture2D imgBt,
-                            Vector2 posB);
+
 
        
 }

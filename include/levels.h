@@ -31,6 +31,10 @@ public:
     int score ;
     Color HealthBarCol;
     std::chrono::_V2::system_clock::time_point startCol;
+    static bool CheckMaskCollision(Texture2D imgAt,
+                            Vector2 posA,
+                            Texture2D imgBt,
+                            Vector2 posB);
 
 protected:
     Texture2D background;
