@@ -6,12 +6,10 @@
 #include "bullet.h"
 #include <iostream>
 
-Bullet::Bullet(Vector2 pos , Texture2D img)
+Bullet::Bullet(Vector2 pos , Texture2D &img)
 {
     set_pos(pos);
-    image = LoadTexture("../media/img/proto#bullet.png");
-    active = true;
-    std::cout << "Bullet";
+    image = &img;
 }
 
 Bullet::~Bullet()
@@ -20,25 +18,27 @@ Bullet::~Bullet()
 
 void Bullet::set_pos(Vector2 position)
 {
-    // rect.x = position.x + 64;
-    // rect.y = position.y;
-
-    rect.x = 300 ; rect.y = 300;
+    rect.x = position.x + 58;
+    rect.y = position.y - 55;
 }
 
 Texture2D Bullet::get_image(){
-    return image;
+    return *image;
 }
 
+void Bullet::draw(){
+    DrawTextureEx(*image , rect , 0 , 0.1f , WHITE);
+}
+
+Vector2 Bullet::get_rect(){
+    return rect;
+}
 
 
 
 
 void Bullet::update(float dt){
     
-    rect.y -= velocity.y * dt;
-    if (rect.y < -50){
-        active = false;
-    }
+   rect.y -= Game::BulletSpeed * dt;
 
 }

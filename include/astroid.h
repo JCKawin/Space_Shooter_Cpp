@@ -5,8 +5,11 @@
 
 class Rock{
 public:
-    Rock();
-    void update();
+    Rock(Vector2 location , Texture2D &image);
+    void update(float dt);
+    void draw();
+    Texture2D get_image();
+    Vector2 get_rect();
     ~
     Rock();
 protected:

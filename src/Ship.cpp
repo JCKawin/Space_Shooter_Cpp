@@ -6,6 +6,7 @@ BaseShip::BaseShip(){
     rect.x = 640;
     rect.y = 360;
     velocity = 1000.0f;
+    Hp = 100;
 }
 
 Texture2D BaseShip::get_image(){
@@ -29,6 +30,10 @@ void BaseShip::update(float dt){
     if(rect.y < -128) rect.y =  720;
     
 
+}
+
+void BaseShip::draw(){
+    DrawTextureEx(image , rect , 0 , 0.15f , WHITE);
 }
 
 BaseShip::~BaseShip(){

@@ -23,7 +23,9 @@ if (WIN32)
   list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/vcpkg_installed/x64-windows")
 endif()
 
-file(GLOB SOURCEFILES "src/*.h" "src/*.cpp")
+include_directories(include)
+
+file(GLOB SOURCEFILES "include/*.h" "src/*.cpp")
 # Add source to this project's executable.
 add_executable (Space_Shooter_Cpp ${SOURCEFILES})
 
