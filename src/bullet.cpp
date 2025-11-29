@@ -1,3 +1,8 @@
+// 
+// This is the file for the bullet class implementation.
+//
+
+
 #include "bullet.h"
 #include <iostream>
 
@@ -19,6 +24,10 @@ void Bullet::set_pos(Vector2 position)
     // rect.y = position.y;
 
     rect.x = 300 ; rect.y = 300;
+}
+
+Texture2D Bullet::get_image(){
+    return image;
 }
 
 

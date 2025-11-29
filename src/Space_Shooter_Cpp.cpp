@@ -20,10 +20,11 @@ int main()
 	Texture2D background = LoadTexture("../media/img/proto#background.bmp");
 	Texture2D bullet_img = LoadTexture("../media/img/proto#bullet.png");
 	auto ship = BaseShip();
-	std::vector<Bullet> bullets ;
+	std::vector<Vector2> bullets ;
 	 
 	//non loop starters
 	PlayMusicStream(bgm);
+	// SetTargetFPS(144);
 	
 	
 	while (!WindowShouldClose()) {
@@ -36,25 +37,28 @@ int main()
 		DrawTextureEx(ship.get_image() , ship.get_rect(),0,0.15f,WHITE);
 		DrawFPS(20 , 20);
 		
-		for(int i ; i < bullets.size() ; i ++){
-			DrawTextureEx(bullets[i].image, (Vector2) {800 , 200} , 0 , 1 , WHITE);
-			// bullets[i].update(dt);
+		for(auto bullet : bullets){
+			DrawTextureEx(bullet_img, bullet , 0 , 0.1f , WHITE);
 		}
-
 
 		EndDrawing();
 
 		ship.update(dt);
-		if(IsKeyDown(KEY_J)){
-			Bullet bullet(ship.get_rect() , bullet_img); 
-			bullets.push_back(bullet);
+
+		for (auto & bullet : bullets){
+			 bullet.y -= 1000.0f * dt;
 		}
 
-		bullets.erase(
-            std::remove_if(bullets.begin(), bullets.end(),
-                [](const Bullet& b) { return !b.active; }),
-            bullets.end()
-        );
+		if(IsKeyPressed(KEY_J)){ 
+			bullets.push_back((Vector2){ship.get_rect().x + 58, ship.get_rect().y - 55});
+			// std::cout << "bullet \n";
+			// for (auto & bullet : bullets){
+			// 	std::cout << "X=" << bullet.x << " Y=" << bullet.y << std::endl;
+			// }
+		}
+
+		auto ne = remove_if(bullets.begin() , bullets.end() , [](Vector2 x){return x.y <= -80;});
+		bullets.erase(ne,bullets.end());
 
 	}
 	UnloadMusicStream(bgm);
