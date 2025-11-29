@@ -38,11 +38,13 @@ int BaseLevel::run(){
         for(auto & rock : Rocks) rock.update(dt);
         damage();
     }
+
+    return 0;
 }
 
 void BaseLevel::damage(){
     for(int i = 0 ; i < Rocks.size() ; i ++) {
-        if (CheckMaskCollision(ship.get_image() , ship.get_rect() , Rocks[i].get_image() , Rocks[i].get_rect())){
+        if (Game::CheckMaskCollision(ship.get_image() , ship.get_rect() , Rocks[i].get_image() , Rocks[i].get_rect())){
             ship.Hp -= 5;
             HealthBarCol = RED;
             startCol = std::chrono::high_resolution_clock::now();
@@ -52,7 +54,7 @@ void BaseLevel::damage(){
     }
     for(int i = 0 ; i < Rocks.size() ; i ++){
         for (int j = 0 ; j < Rocks.size() ; j++){
-            if(CheckMaskCollision(bullets[i].get_image() , bullets[i].get_rect() , Rocks[j].get_image() , Rocks[j].get_rect())){
+            if(Game::CheckMaskCollision(bullets[i].get_image() , bullets[i].get_rect() , Rocks[j].get_image() , Rocks[j].get_rect())){
 
             }
         }
@@ -60,46 +62,6 @@ void BaseLevel::damage(){
 
 }
 
-bool CheckMaskCollision(Texture2D imgAt, Vector2 posA, Texture2D imgBt, Vector2 posB) {
-    auto imgA = LoadImageFromTexture(imgAt);
-    auto imgB = LoadImageFromTexture(imgBt);
-    Rectangle rectA = { posA.x, posA.y, (float)imgA.width, (float)imgA.height };
-    Rectangle rectB = { posB.x, posB.y, (float)imgB.width, (float)imgB.height };
-
-    if (!CheckCollisionRecs(rectA, rectB)) return false;
-
-    float overlapX = fmaxf(rectA.x, rectB.x);
-    float overlapY = fmaxf(rectA.y, rectB.y);
-    float overlapW = fminf(rectA.x + rectA.width, rectB.x + rectB.width) - overlapX;
-    float overlapH = fminf(rectA.y + rectA.height, rectB.y + rectB.height) - overlapY;
-
-    if (overlapW <= 0 || overlapH <= 0) return false;
-
-    Color *pixelsA = LoadImageColors(imgA);
-    Color *pixelsB = LoadImageColors(imgB);
-
-    for (int y = 0; y < (int)overlapH; y++) {
-        for (int x = 0; x < (int)overlapW; x++) {
-            int ax = (int)(overlapX - rectA.x) + x;
-            int ay = (int)(overlapY - rectA.y) + y;
-            int bx = (int)(overlapX - rectB.x) + x;
-            int by = (int)(overlapY - rectB.y) + y;
-
-            Color ca = pixelsA[ay * imgA.width + ax];
-            Color cb = pixelsB[by * imgB.width + bx];
-
-            if (ca.a > 0 && cb.a > 0) {
-                UnloadImageColors(pixelsA);
-                UnloadImageColors(pixelsB);
-                return true;
-            }
-        }
-    }
-
-    UnloadImageColors(pixelsA);
-    UnloadImageColors(pixelsB);
-    return false;
-}
 
 
 

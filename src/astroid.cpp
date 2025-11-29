@@ -4,7 +4,7 @@
 Rock::Rock(Vector2 location , Texture2D &img){
     image = &img;
     rect = location;
-    direction = (Vector2) {std::rand()%2 + 1 , 1};
+    direction = (Vector2) {(float)(std::rand()%2) + 1.0f , 1.0f};
     direction = Vector2Normalize(direction);
     angle = 0.0f;
 }
